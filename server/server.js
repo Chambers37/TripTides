@@ -6,6 +6,8 @@ const app = express();
 
 connectDB();
 
+app.use(express.json());
+
 // Test route to confirm server and MongoDB connection
 app.get('/', (req, res) => {
   res.send('Server is running and MongoDB is connected!');
