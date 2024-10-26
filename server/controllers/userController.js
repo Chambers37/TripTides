@@ -7,10 +7,16 @@ const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    // Check if the user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+    // Check if the username or email already exists
+    const existingUsername = await User.findOne({ username });
+    const existingEmail = await User.findOne({ email });
+
+    if (existingUsername) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    if (existingEmail) {
+      return res.status(400).json({ message: 'Email already exists' });
     }
 
     // Hashing the password
@@ -30,3 +36,32 @@ const registerUser = async (req, res) => {
     res.status(500).json({ message: 'Server error', error });
   }
 };
+
+// User Login
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    // Checking password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid password' });
+    }
+
+    const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
+
+    res.json({ token })
+
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error })
+  }
+}
+
+module.exports = { registerUser, loginUser }
