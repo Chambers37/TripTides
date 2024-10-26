@@ -1,22 +1,21 @@
 # TripTides
 
-TripTides is a weather-based travel planning web application that allows users to create trips, view weather forecasts, and share travel experiences in a community forum.
+TripTides is a weather-based travel planning web application that allows users to explore destinations, view weather forecasts, and share experiences. Users can search for attractions within a specified radius, save favorite destinations, and connect with others through destination-specific discussion pages.
 
 ## Features
-- Create and save trips.
-- Real-time weather forecasts.
-- Forum for sharing and discussing travel experiences.
-
-## Setup
-1. Clone the repository.
-2. Run `npm install` in both the `client` and `server` directories.
-3. Create a `.env` file in the `server` directory with your MongoDB URI and JWT secret.
-4. Run the development servers with:
-   - `cd client && npm run dev`
-   - `cd server && npm run start`
+- User Authentication: Register and log in to personalize your experience.
 
 ## Technologies Used
-- MongoDB
-- Express.js
-- React.js
-- Node.js
+- MongoDB: For storing user, destination, and favorite data.
+- Express.js: Backend framework for API routing and middleware.
+- Node.js: Server environment for running the backend application.
+- Google Places API: For finding nearby attractions.
+- Weather API: For fetching weather forecasts by location and date.
+
+## Future Development
+- User Profiles: Displaying user information and favorite destinations.
+- Extended Community Features: Commenting, liking, and replying on destination discussion pages.
+- Destination Search: Use the Google Places API to search for attractions within a certain radius around a zip code.
+- Weather Forecasts: View upcoming weather forecasts for destinations based on date range and location.
+- Favorites: Logged-in users can favorite destinations to easily revisit them.
+- Destination Pages: Each destination has a dedicated page where users can post information, share travel tips, and discuss their experiences.
