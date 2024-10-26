@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
   res.send('Server is running and MongoDB is connected!');
 });
 
-app.use('api/users', userRouter);
+app.use('/api/users', userRouter);
 
 const PORT = process.env.PORT 
 
