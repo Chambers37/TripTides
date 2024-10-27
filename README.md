@@ -4,6 +4,7 @@ TripTides is a weather-based travel planning web application that allows users t
 
 ## Features
 - **User Authentication**: Register and log in to personalize your experience.
+- **Destination Search**: Use the Google Places API to search for attractions within a certain radius around a City and State location.
 
 ## Technologies Used
 - **MongoDB**: For storing user, destination, and favorite data.
@@ -16,7 +17,6 @@ TripTides is a weather-based travel planning web application that allows users t
 ## Future Development
 - **User Profiles**: Displaying user information and favorite destinations.
 - **Extended Community Features**: Commenting, liking, and replying on destination discussion pages.
-- **Destination Search**: Use the Google Places API to search for attractions within a certain radius around a zip code.
 - **Weather Forecasts**: View upcoming weather forecasts for destinations based on date range and location.
 - **Favorites**: Logged-in users can favorite destinations to easily revisit them.
 - **Destination Pages**: Each destination has a dedicated page where users can post information, share travel tips, and discuss their experiences.
