@@ -12,6 +12,7 @@ const getCoordinates = async (cityState) => {
     });
 
     const { lat, lng } = response.data.results[0].geometry.location;
+    console.log(`Coordinates: ${lat}, ${lng}`)
     return { lat, lng };
 
   } catch (error) {
@@ -21,25 +22,39 @@ const getCoordinates = async (cityState) => {
 };
 
 const searchDestinations = async (req, res) => {
-  const { location, radius } = req.query;
+  const { location, radius } = req.body;
+  console.log('Received request for location:', location, 'with radius:', radius);
 
   try {
     const { lat, lng } = await getCoordinates(location);
+    console.log(`Coordinates found: ${lat}, ${lng}`);
 
-    const response = await axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
-      params: {
-        key: process.env.GOOGLE_API_KEY,
-        location: `${lat},${lng}`,
-        radius,
-        type: 'tourist_attraction',
+    const response = await axios.post( 'https://places.googleapis.com/v1/places:searchNearby', {
+      includedTypes: ['tourist_attraction', 'restaurant'],
+      locationRestriction: {
+        circle: {
+          center: {
+            latitude: lat,
+            longitude: lng
+          },
+          radius: parseFloat(radius)
+        }
+      }
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': process.env.GOOGLE_API_KEY,
+        'X-Goog-FieldMask': 'places.displayName'
       }
     });
 
-    res.json(response.data.results);
+    console.log('Sending response:', response.data.places);
+    res.json(response.data.places);
 
   } catch (error) {
-    console.error('Error fetching destinations:', error);
-    res.status(500).json({ error: 'Failed to fetch destinations' });
+    console.error('Error fetching destinations:', error.response ? error.response.data : error.message);
+    res.status(500).json({ error: 'Failed to fetch destinations', details: error.message });
   }
 };
 
