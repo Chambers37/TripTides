@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const connectDB = require('./config/db');
 const userRouter = require('./api/routes/userRoutes');
@@ -9,14 +10,13 @@ connectDB();
 
 app.use(express.json());
 
-// Test route to confirm server and MongoDB connection
-app.get('/', (req, res) => {
-  res.send('Server is running and MongoDB is connected!');
-});
-
 app.use('/api/users', userRouter);
 
 app.use('/api/destinations', destinationsRouter);
+
+app.use('/', (rew, res) => {
+  res.sendFile(path.join(__dirname, '../client/index.html'));
+})
 
 const PORT = process.env.PORT 
 
